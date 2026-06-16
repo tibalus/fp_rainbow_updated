@@ -77,7 +77,14 @@ async function makeRuntimeConfig(uuid, version, cmd, testNames) {
 		fileInfos: {
 			uuid: uuid,
 			date: new Date().toISOString(),
-			path: {fpjs: '../server/data/fpjs', jsta: '../server/data/jsta'}
+			path: {
+				fpjs: '../server/data/fpjs',
+				jsta: '../server/data/jsta',
+				thumbmarkjs: '../server/data/thumbmarkjs',
+				creepjs: '../server/data/creepjs',
+				clientjs: '../server/data/clientjs',
+				broprintjs: '../server/data/broprintjs'
+			}
 		},
 		runtimeConfig: {
 			browserVersion: version,
@@ -100,12 +107,38 @@ async function makeRuntimeConfig(uuid, version, cmd, testNames) {
 
 async function runTestPage(uuid, page) {
 	try {
+		// FingerprintJS (original)
+		console.log("    |- Visiting FingerprintJS")
 		await page.goto(`http://fingerprintjs:5000/#${uuid}`)
 		await page.waitForTimeout(8000)
+
+		// ThumbmarkJS
+		console.log("    |- Visiting ThumbmarkJS")
+		await page.goto(`http://thumbmarkjs:5001/#${uuid}`)
+		await page.waitForTimeout(5000)
+
+		// CreepJS
+		console.log("    |- Visiting CreepJS")
+		await page.goto(`http://creepjs:5002/#${uuid}`)
+		await page.waitForTimeout(5000)
+
+		// ClientJS
+		console.log("    |- Visiting ClientJS")
+		await page.goto(`http://clientjs:5003/#${uuid}`)
+		await page.waitForTimeout(5000)
+
+		// Broprint.js
+		console.log("    |- Visiting Broprint.js")
+		await page.goto(`http://broprintjs:5004/#${uuid}`)
+		await page.waitForTimeout(5000)
+
+		// JS Template Attacks (original)
+		console.log("    |- Visiting JSTA")
 		await page.goto(`http://js-template-attacks:8080/record#${btoa(uuid)}`)
 		await page.waitForSelector('#log > span:nth-child(49)')
 		await page.reload()
 		await page.waitForSelector('#log > span:nth-child(49)')
+
 		await client.query(`UPDATE "runtimeconfig" SET "status" = 'success' WHERE "uuid" = '${uuid}'`)
 	} catch (error) {
 		if (error.name === 'TimeoutError') {

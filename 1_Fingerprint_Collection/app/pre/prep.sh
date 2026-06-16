@@ -9,7 +9,7 @@ MSG_INFO="[${GREEN}info${NC}]"
 MSG_WARN="[${YELLOW}warn${NC}]"
 
 # Check dependencies
-dependencies="npm docker docker-compose node wget tar"
+dependencies="npm docker docker-compose node tar"
 
 for dep in $dependencies
 do

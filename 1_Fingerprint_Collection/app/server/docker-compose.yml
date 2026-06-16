@@ -7,7 +7,7 @@ services:
     working_dir: /home/node/app
     volumes:
       - ./jsta:/home/node/app
-    command: node server.js 
+    command: node server.js
     ports:
       - 8080:8080
     #restart: unless-stopped
@@ -17,10 +17,46 @@ services:
     working_dir: /home/node/app
     volumes:
       - ./fpjs:/home/node/app
-    command: node index.js 
+    command: node index.js
     ports:
       - 5000:5000
 
-networks: 
-  default: 
+  thumbmarkjs:
+    image: node:latest
+    working_dir: /home/node/app
+    volumes:
+      - ./thumbmarkjs:/home/node/app
+    command: sh -c "npm install && node index.js"
+    ports:
+      - 5001:5001
+
+  creepjs:
+    image: node:latest
+    working_dir: /home/node/app
+    volumes:
+      - ./creepjs:/home/node/app
+    command: sh -c "npm install && node index.js"
+    ports:
+      - 5002:5002
+
+  clientjs:
+    image: node:latest
+    working_dir: /home/node/app
+    volumes:
+      - ./clientjs:/home/node/app
+    command: sh -c "npm install && node index.js"
+    ports:
+      - 5003:5003
+
+  broprintjs:
+    image: node:latest
+    working_dir: /home/node/app
+    volumes:
+      - ./broprintjs:/home/node/app
+    command: sh -c "npm install && node index.js"
+    ports:
+      - 5004:5004
+
+networks:
+  default:
     name: fp-docker 

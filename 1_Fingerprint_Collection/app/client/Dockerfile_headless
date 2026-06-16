@@ -1,4 +1,4 @@
-FROM node:16
+FROM node:20-bookworm-slim
 
 RUN apt-get update \
     && apt-get install -y wget gnupg \
@@ -9,8 +9,9 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && groupadd -r pptruser && useradd -rm -g pptruser -G audio,video pptruser
 
+WORKDIR /home/pptruser
+COPY --chown=pptruser:pptruser package.json /home/pptruser/
+
 USER pptruser
 
-WORKDIR /home/pptruser
-
-RUN npm i puppeteer-core pg dotenv uuid systeminformation
+RUN npm install

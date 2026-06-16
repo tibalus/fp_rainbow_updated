@@ -1,0 +1,13 @@
+{
+  "permissions":{
+    "allow": [
+      "Read(./app)",
+      "Edit",
+      "Write",
+      "Grep"
+    ],
+    "deny":[
+      "Bash"
+    ]
+  }
+}
